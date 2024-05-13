@@ -5,13 +5,13 @@ class UserEntity {
     required this.errorMsg,
   });
 
-  final Data data;
+  final Data? data;
   final int errorCode;
   final String errorMsg;
 
   factory UserEntity.fromJson(Map<String, dynamic> json) {
     return UserEntity(
-      data: Data.fromJson(json['data']),
+      data: json['data'] != null ? Data.fromJson(json['data']) : null, // 如果data不为null，则解析为Data对象，否则为null
       errorCode: json['errorCode'],
       errorMsg: json['errorMsg'],
     );
@@ -19,7 +19,7 @@ class UserEntity {
 
   Map<String, dynamic> toJson() {
     return {
-      'data': data.toJson(),
+      'data': data?.toJson(),
       'errorCode': errorCode,
       'errorMsg': errorMsg,
     };

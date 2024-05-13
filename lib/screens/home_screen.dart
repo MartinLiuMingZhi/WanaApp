@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:application/common/api.dart';
+import 'package:application/components/articlelist.dart';
 import 'package:application/components/carousel.dart';
+import 'package:application/entity/article_entity.dart';
 import 'package:application/entity/banner_entity.dart';
 import 'package:application/network/http_util.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<Data> banners = [];
+  List<Datum> articles = [];
 
   @override
   void initState() {
@@ -29,6 +32,15 @@ class _HomePageState extends State<HomePage> {
     if (bannerEntity.errorCode == 0) {
       setState(() {
         banners = bannerEntity.data;
+      });
+    }
+
+    var articleResponse = await HttpUtil().get(Api.TOP_ARTICLE);
+    Map<String, dynamic> articleMap = json.decode(articleResponse.toString());
+    var articleEntity = ArticleEntity.fromJson(articleMap);
+    if (articleEntity.errorCode == 0) {
+      setState(() {
+        articles = articleEntity.data;
       });
     }
   }
@@ -49,7 +61,11 @@ class _HomePageState extends State<HomePage> {
           ),
           Expanded(
             flex: 3,
-            child: ListView(),
+            child: banners.isEmpty
+                ? const Center(child: CircularProgressIndicator())
+                : ArticleList(
+                    articles: articles,
+                  ),
           ),
         ],
       ),

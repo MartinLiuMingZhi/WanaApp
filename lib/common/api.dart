@@ -49,4 +49,6 @@ class Api {
   //取消收藏-收藏页面
   static const String UN_COLLECT = "lg/uncollect/";
 
+  //置顶文章
+  static const String TOP_ARTICLE = "article/top/json";
 }

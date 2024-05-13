@@ -32,6 +32,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.dispose();
   }
 
+  void _showErrorSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red, // 设置SnackBar背景色为红色
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
@@ -230,6 +239,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         builder: (context) =>
                                         const SignInScreen()),
                                         (route) => false);
+                              }else{
+                                _showErrorSnackBar(userEntity.errorMsg);
                               }
                             } else if (!agreePersonalData) {
                               ScaffoldMessenger.of(context).showSnackBar(
