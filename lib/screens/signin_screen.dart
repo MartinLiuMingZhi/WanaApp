@@ -1,11 +1,11 @@
 import 'dart:convert';
-
 import 'package:application/common/api.dart';
 import 'package:application/entity/user_entity.dart';
-import 'package:application/home.dart';
+import 'package:application/screens/home.dart';
 import 'package:application/network/http_util.dart';
 import 'package:application/screens/forget_password.dart';
 import 'package:application/screens/signup_screen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -43,19 +43,26 @@ class _SignInScreenState extends State<SignInScreen> {
   // 从 SharedPreferences 中加载保存的用户名和密码
   void _loadSavedCredentials() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _usernameController.text = prefs.getString('username') ?? '';
-      _passwordController.text = prefs.getString('password') ?? '';
-      rememberPassword = prefs.getBool('rememberPassword') ?? true;
-    });
+    if (!kIsWeb) { // 只在非 Web 环境下加载保存的凭据
+      setState(() {
+        _usernameController.text = prefs.getString('username') ?? '';
+        _passwordController.text = prefs.getString('password') ?? '';
+        rememberPassword = prefs.getBool('rememberPassword') ?? true;
+      });
+    }
   }
 
   // 保存用户名和密码到 SharedPreferences
   void _saveCredentials() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('username', _usernameController.text);
-    prefs.setString('password', _passwordController.text);
-    prefs.setBool('rememberPassword', rememberPassword);
+    if (!kIsWeb) { // 只在非 Web 环境下使用 Cookie 管理器
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('username', _usernameController.text);
+      prefs.setString('password', _passwordController.text);
+      prefs.setBool('rememberPassword', rememberPassword);
+    }else {
+      // 在 Web 环境中给出一个提示或采取其他措施
+      print("当前在 Web 环境中，无法使用 Cookie 管理器。");
+    }
   }
 
   @override
