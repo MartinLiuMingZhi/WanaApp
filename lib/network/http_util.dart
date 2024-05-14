@@ -75,6 +75,22 @@ class HttpUtil {
     return response;
   }
 
+  // get(String path, {Map<String, dynamic>? data, Options? options, CancelToken? cancelToken}) async {
+  //   Response? response;
+  //   try {
+  //     // 替换路径中的可替代部分
+  //     String url = path.replaceAll("{page_size}", data?["page_size"] ?? ""); // 如果没有提供 "page_size" 参数，则使用空字符串替代
+  //     response = await dio?.get(url, queryParameters: data, options: options, cancelToken: cancelToken);
+  //     print('get success---------${response?.statusCode}');
+  //     print('get success---------${response?.data}');
+  //   } on DioError catch (e) {
+  //     print('get error---------$e');
+  //     formatError(e);
+  //   }
+  //   return response;
+  // }
+
+
   /*
    * post请求
    */
