@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../common/api.dart';
 import '../entity/project_entity.dart';
 import '../network/http_util.dart';
+import 'article_webview.dart';
 
 
 class ProjectView extends StatefulWidget {
@@ -49,6 +50,20 @@ class _ProjectViewState extends State<ProjectView> {
     }
   }
 
+  // 定义方法处理点击事件
+  void _handleArticleTap(int index) async {
+    // 获取当前文章的URL
+    String articleUrl = projects[index].link;
+    String title = projects[index].title;
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ArticleWebView(title: title ,url: articleUrl),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -65,11 +80,17 @@ class _ProjectViewState extends State<ProjectView> {
         ),
         itemBuilder: (context, index) {
           var item = projects[index];
-          return ItemProject(
-            imagePath: item.envelopePic,
-            title: item.title,
-            projectLink: item.projectLink,
-            link: item.link,
+          return GestureDetector(
+            onTap: () {
+              // 调用方法处理点击事件
+              _handleArticleTap(index);
+            },
+            child: ItemProject(
+              imagePath: item.envelopePic,
+              title: item.title,
+              projectLink: item.projectLink,
+              link: item.link,
+            ),
           );
         },
       ),

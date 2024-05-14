@@ -57,38 +57,38 @@ class HttpUtil {
   /*
    * get请求
    */
-  get(url, {data, options, cancelToken}) async {
+//   get(url, {data, options, cancelToken}) async {
+//     Response? response;
+//     try {
+//       response = await dio?.get(url, queryParameters: data, options: options, cancelToken: cancelToken);
+//       print('get success---------${response?.statusCode}');
+//       print('get success---------${response?.data}');
+//
+// //      response.data; 响应体
+// //      response.headers; 响应头
+// //      response.request; 请求体
+// //      response.statusCode; 状态码
+//     } on DioError catch (e) {
+//       print('get error---------$e');
+//       formatError(e);
+//     }
+//     return response;
+//   }
+
+  get(String path, {Map<String, dynamic>? data, Options? options, CancelToken? cancelToken}) async {
     Response? response;
     try {
+      // 替换路径中的可替代部分
+      String url = path.replaceAll("{page_size}", data?["page_size"] ?? "0"); // 如果没有提供 "page_size" 参数，则使用空字符串替代
       response = await dio?.get(url, queryParameters: data, options: options, cancelToken: cancelToken);
       print('get success---------${response?.statusCode}');
       print('get success---------${response?.data}');
-
-//      response.data; 响应体
-//      response.headers; 响应头
-//      response.request; 请求体
-//      response.statusCode; 状态码
     } on DioError catch (e) {
       print('get error---------$e');
       formatError(e);
     }
     return response;
   }
-
-  // get(String path, {Map<String, dynamic>? data, Options? options, CancelToken? cancelToken}) async {
-  //   Response? response;
-  //   try {
-  //     // 替换路径中的可替代部分
-  //     String url = path.replaceAll("{page_size}", data?["page_size"] ?? ""); // 如果没有提供 "page_size" 参数，则使用空字符串替代
-  //     response = await dio?.get(url, queryParameters: data, options: options, cancelToken: cancelToken);
-  //     print('get success---------${response?.statusCode}');
-  //     print('get success---------${response?.data}');
-  //   } on DioError catch (e) {
-  //     print('get error---------$e');
-  //     formatError(e);
-  //   }
-  //   return response;
-  // }
 
 
   /*

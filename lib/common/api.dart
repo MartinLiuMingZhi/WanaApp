@@ -51,4 +51,7 @@ class Api {
 
   //置顶文章
   static const String TOP_ARTICLE = "article/top/json";
+
+  //广场列表数据
+  static const String USER_ARTICE = "/user_article/list/{page_size}/json";
 }

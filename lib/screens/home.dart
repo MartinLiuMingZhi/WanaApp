@@ -2,6 +2,7 @@
 
 import 'package:application/screens/home_screen.dart';
 import 'package:application/screens/project_screen.dart';
+import 'package:application/screens/square_screen.dart';
 import 'package:application/widgets/icon_tab.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class MyHomePage extends StatelessWidget{
         body:  TabBarView(children: [
           HomePage(),
           ProjectScreen(),
-          Text('3'),
+          SquareScreen(),
           Text('4'),
         ]),
         bottomNavigationBar: TabBar(
